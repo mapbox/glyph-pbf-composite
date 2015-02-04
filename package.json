@@ -1,0 +1,20 @@
+{
+  "name": "glyph-composite",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "protocol-buffers": "^2.4.7"
+  },
+  "devDependencies": {
+    "tape": "^3.5.0"
+  },
+  "scripts": {
+    "test": "jshint -e .js index.js test && node test/test.js"
+  },
+  "jshintConfig": {
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "node": true
+  }
+}
