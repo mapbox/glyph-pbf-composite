@@ -6,9 +6,7 @@
     "protocol-buffers": "^2.4.7"
   },
   "devDependencies": {
-    "tape": "^3.5.0",
-    "aws-sdk": "2.1.8",
-    "queue-async": "^1.0.7"
+    "tape": "^3.5.0"
   },
   "scripts": {
     "test": "jshint -e .js index.js test && node test/test.js"
