@@ -1,15 +1,19 @@
 {
-  "name": "glyph-composite",
+  "name": "glyph-pbf-composite",
   "version": "0.0.1",
+  "description": "Combine glyph (SDF) PBFs on the fly.",
   "main": "index.js",
   "dependencies": {
     "protocol-buffers": "^2.4.7"
   },
   "devDependencies": {
+    "dox": "^0.6.1",
+    "doxme": "^1.4.3",
     "tape": "^3.5.0"
   },
   "scripts": {
-    "test": "jshint -e .js index.js test && node test/test.js"
+    "test": "jshint -e .js index.js test && node test/test.js",
+    "doc": "dox -r index.js | doxme --readme > README.md"
   },
   "jshintConfig": {
     "undef": true,
