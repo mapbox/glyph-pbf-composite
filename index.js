@@ -3,7 +3,7 @@
 var protobuf = require('protocol-buffers');
 var fs = require('fs');
 
-var messages = protobuf(fs.readFileSync('./proto/glyphs.proto'));
+var messages = protobuf(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
 
 function debug(buffer, decode) {
     if (decode) buffer = messages.glyphs.decode(buffer);
@@ -39,7 +39,7 @@ function combine(buffers) {
 
     result.stacks[0].glyphs.sort(function(a, b) { return a.id - b.id; });
 
-    return result;
+    return messages.glyphs.encode(result);
 }
 
 module.exports = {
