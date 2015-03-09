@@ -21,7 +21,7 @@ function debug(buffer, decode) {
  * to determine glyph priority.
  * @param {array} buffers An array of SDF PBFs.
  */
-function combine(buffers) {
+function combine(buffers, fontstack) {
     var result,
         coverage = {};
 
@@ -43,6 +43,7 @@ function combine(buffers) {
             result.stacks[0].name += ', ' + decoded.stacks[0].name;
         }
     });
+    if (fontstack) result.stacks[0].name = fontstack;
 
     result.stacks[0].glyphs.sort(function(a, b) { return a.id - b.id; });
 

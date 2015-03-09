@@ -1,6 +1,6 @@
 {
   "name": "glyph-pbf-composite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Combine glyph (SDF) PBFs on the fly.",
   "main": "index.js",
   "dependencies": {
