@@ -1,9 +1,9 @@
 'use strict';
 
-var protobuf = require('protocol-buffers');
+var compile = require('pbf/compile');
 var fs = require('fs');
 
-var messages = protobuf(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
+var messages = pbf(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
 
 function debug(buffer, decode) {
     if (decode) buffer = messages.glyphs.decode(buffer);
