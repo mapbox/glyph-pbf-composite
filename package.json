@@ -4,14 +4,17 @@
   "description": "Combine glyph (SDF) PBFs on the fly.",
   "main": "index.js",
   "dependencies": {
+    "pbf": "^2.0.1",
     "protocol-buffers": "^2.4.7"
   },
   "devDependencies": {
     "dox": "^0.6.1",
     "doxme": "^1.4.3",
+    "jshint": "^2.9.2",
     "tape": "^3.5.0"
   },
   "scripts": {
+    "pretest": "pbf proto/glyphs.proto > proto/glyphs.js",
     "test": "jshint -e .js index.js test && node test/test.js",
     "doc": "dox -r index.js | doxme --readme > README.md"
   },

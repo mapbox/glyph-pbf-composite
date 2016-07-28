@@ -10,6 +10,17 @@ var openSans512 = fs.readFileSync(__dirname + '/fixtures/opensans.512.767.pbf'),
     composite512 = fs.readFileSync(__dirname + '/fixtures/opensans.arialunicode.512.767.pbf'),
     triple512 = fs.readFileSync(__dirname + '/fixtures/league.opensans.arialunicode.512.767.pbf');
 
+tape('can composite only one pbf', function(t) {
+    console.log(glyphs.decode(composite512));
+
+    var composite = glyphs.decode(glyphs.combine([openSans512]));
+    var expected = glyphs.decode(openSans512);
+
+    t.deepEqual(composite, expected, 'doesn\'t break itself');
+
+    t.end();
+});
+
 tape('compositing two pbfs', function(t) {
     var composite = glyphs.decode(glyphs.combine([openSans512, arialUnicode512]));
     var expected = glyphs.decode(composite512);
@@ -54,15 +65,6 @@ tape('compositing and providing fontstack string name', function(t) {
 
     t.end();
 
-});
-
-tape('can composite only one pbf', function(t) {
-    var composite = glyphs.decode(glyphs.combine([openSans512]));
-    var expected = glyphs.decode(openSans512);
-
-    t.deepEqual(composite, expected, 'doesn\'t break itself');
-
-    t.end();
 });
 
 tape('can composite more than two', function(t) {

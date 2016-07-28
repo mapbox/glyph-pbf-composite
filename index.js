@@ -1,17 +1,29 @@
 'use strict';
 
-var protobuf = require('protocol-buffers');
-var fs = require('fs');
+var Pbf = require('pbf');
+var Glyphs = require('./proto/glyphs.js').glyph;
 
-var messages = protobuf(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
-
-function debug(buffer, decode) {
-    if (decode) buffer = messages.glyphs.decode(buffer);
+function debug(buffer, parse) {
+    if (parse) {
+        var pbf = new Pbf(buffer);
+        buffer = decode(pbf);
+    }
 
     return JSON.stringify(buffer, function(k, v) {
         if (k !== 'bitmap') return v;
         return v ? v.length : v;
     }, 2);
+}
+
+function encode(obj) {
+    var pbf = new Pbf();
+    Glyphs.write(obj, pbf);
+    return pbf.finish();
+}
+
+function decode(buffer) {
+    var pbf = new Pbf(buffer);
+    return Glyphs.read(pbf);
 }
 
 /**
@@ -25,8 +37,8 @@ function combine(buffers, fontstack) {
     var result,
         coverage = {};
 
-    buffers.forEach(function(buf) {
-        var decoded = messages.glyphs.decode(buf);
+    buffers.forEach(function(buffer) {
+        var decoded = decode(buffer);
         var glyphs = decoded.stacks[0].glyphs;
         if (!result) {
             glyphs.forEach(function(glyph) {
@@ -47,12 +59,12 @@ function combine(buffers, fontstack) {
 
     result.stacks[0].glyphs.sort(function(a, b) { return a.id - b.id; });
 
-    return messages.glyphs.encode(result);
+    return encode(result);
 }
 
 module.exports = {
     combine: combine,
     debug: debug,
-    encode: messages.glyphs.encode,
-    decode: messages.glyphs.decode
+    encode: encode,
+    decode: decode
 };
