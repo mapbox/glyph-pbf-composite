@@ -22,7 +22,7 @@ to determine glyph priority.
 Requires [nodejs](http://nodejs.org/).
 
 ```sh
-$ npm install glyph-pbf-composite
+$ npm install @mapbox/glyph-pbf-composite
 ```
 
 ## Tests
