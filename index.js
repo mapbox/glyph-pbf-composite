@@ -3,10 +3,11 @@
 var compile = require('pbf/compile');
 var fs = require('fs');
 
-var messages = pbf(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
+var messages = compile(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
+console.log(messages);
 
 function debug(buffer, decode) {
-    if (decode) buffer = messages.glyphs.decode(buffer);
+    if (decode) buffer = messages.decode(buffer);
 
     return JSON.stringify(buffer, function(k, v) {
         if (k !== 'bitmap') return v;
@@ -28,7 +29,7 @@ function combine(buffers, fontstack) {
     if (!buffers || buffers.length === 0) return;
 
     buffers.forEach(function(buf) {
-        var decoded = messages.glyphs.decode(buf);
+        var decoded = messages.decode(buf);
         var glyphs = decoded.stacks[0].glyphs;
         if (!result) {
             glyphs.forEach(function(glyph) {
@@ -49,12 +50,12 @@ function combine(buffers, fontstack) {
 
     result.stacks[0].glyphs.sort(function(a, b) { return a.id - b.id; });
 
-    return messages.glyphs.encode(result);
+    return messages.encode(result);
 }
 
 module.exports = {
     combine: combine,
     debug: debug,
-    encode: messages.glyphs.encode,
-    decode: messages.glyphs.decode
+    encode: messages.encode,
+    decode: messages.decode
 };
