@@ -9,6 +9,7 @@
   "devDependencies": {
     "dox": "^0.6.1",
     "doxme": "^1.4.3",
+    "jshint": "^2.9.4",
     "tape": "^3.5.0"
   },
   "scripts": {

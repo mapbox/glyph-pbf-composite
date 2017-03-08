@@ -25,7 +25,7 @@ function combine(buffers, fontstack) {
     var result,
         coverage = {};
     
-    if (!buffers || buffers.length === 0) return
+    if (!buffers || buffers.length === 0) return;
 
     buffers.forEach(function(buf) {
         var decoded = messages.glyphs.decode(buf);
