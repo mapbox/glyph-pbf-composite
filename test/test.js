@@ -56,6 +56,23 @@ tape('compositing and providing fontstack string name', function(t) {
 
 });
 
+tape('debug method shows decoded glyphs', function(t) {
+    var something = glyphs.debug(openSans512, true);
+    t.doesNotThrow(function() { JSON.parse(something); });
+    t.equals(JSON.parse(something).stacks[0].glyphs.length, 16);
+
+    var decoded = glyphs.debug(glyphs.decode(openSans512));
+    t.doesNotThrow(function() { JSON.parse(decoded); });
+    t.equals(JSON.parse(something).stacks[0].glyphs.length, 16);
+
+    t.end();
+});
+
+tape('returns nothing when given nothing', function(t) {
+    t.equals(glyphs.combine([]), undefined);
+    t.end();
+});
+
 tape('can composite only one pbf', function(t) {
     var composite = glyphs.decode(glyphs.combine([openSans512]));
     var expected = glyphs.decode(openSans512);
