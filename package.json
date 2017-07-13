@@ -4,18 +4,18 @@
   "description": "Combine glyph (SDF) PBFs on the fly.",
   "main": "index.js",
   "dependencies": {
-    "pbf": "^2.0.1",
-    "protocol-buffers": "^2.4.7",
-    "protocol-buffers-schema": "^3.1.0"
+    "pbf": "^3.0.5",
+    "protocol-buffers": "^3.2.1",
+    "protocol-buffers-schema": "^3.3.1"
   },
   "devDependencies": {
-    "benchmark": "^1.0.0",
-    "dox": "^0.6.1",
-    "doxme": "^1.4.3",
-    "jshint": "^2.9.4",
+    "benchmark": "^2.1.4",
+    "dox": "^0.9.0",
+    "doxme": "^1.8.2",
+    "jshint": "^2.9.5",
     "nyc": "^11.0.3",
     "opener": "^1.4.3",
-    "tape": "^3.5.0"
+    "tape": "^4.7.0"
   },
   "scripts": {
     "pretest": "jshint -e *.js index.js test",
