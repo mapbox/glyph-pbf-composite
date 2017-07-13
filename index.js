@@ -10,7 +10,7 @@ function debug(buffer, decode) {
 
     return JSON.stringify(buffer, function(k, v) {
         if (k !== 'bitmap') return v;
-        return v ? v.length : v;
+        return v ? v.data.length : v;
     }, 2);
 }
 

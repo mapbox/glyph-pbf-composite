@@ -11,10 +11,14 @@
     "dox": "^0.6.1",
     "doxme": "^1.4.3",
     "jshint": "^2.9.4",
+    "nyc": "^11.0.3",
+    "opener": "^1.4.3",
     "tape": "^3.5.0"
   },
   "scripts": {
-    "test": "jshint -e .js index.js test && node test/test.js && node test/benchmark.js",
+    "pretest": "jshint -e *.js index.js test",
+    "test": "nyc node test/test.js && node test/benchmark.js",
+    "coverage": "nyc --reporter html tape test/test.js && opener coverage/index.html",
     "doc": "dox -r index.js | doxme --readme > README.md"
   },
   "jshintConfig": {
