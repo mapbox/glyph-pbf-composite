@@ -7,13 +7,14 @@
     "protocol-buffers": "^2.4.7"
   },
   "devDependencies": {
+    "benchmark": "^1.0.0",
     "dox": "^0.6.1",
     "doxme": "^1.4.3",
     "jshint": "^2.9.4",
     "tape": "^3.5.0"
   },
   "scripts": {
-    "test": "jshint -e .js index.js test && node test/test.js",
+    "test": "jshint -e .js index.js test && node test/test.js && node test/benchmark.js",
     "doc": "dox -r index.js | doxme --readme > README.md"
   },
   "jshintConfig": {
