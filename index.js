@@ -1,12 +1,7 @@
 'use strict';
 
-var fs = require('fs');
-var compile = require('pbf/compile');
 var Pbf = require('pbf');
-var schema = require('protocol-buffers-schema');
-
-var proto = schema.parse(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
-var messages = compile(proto);
+var messages = require('./glyphs');
 
 function decodeGlyphs(buffer) {
     return messages.glyphs.read(new Pbf(buffer));
