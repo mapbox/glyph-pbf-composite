@@ -1,16 +1,29 @@
 'use strict';
 
-var protobuf = require('protocol-buffers');
 var fs = require('fs');
+var compile = require('pbf/compile');
+var Pbf = require('pbf');
+var schema = require('protocol-buffers-schema');
 
-var messages = protobuf(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
+var proto = schema.parse(fs.readFileSync(__dirname + '/proto/glyphs.proto'));
+var messages = compile(proto);
+
+function decodeGlyphs(buffer) {
+    return messages.glyphs.read(new Pbf(buffer));
+}
+
+function encodeGlyphs(glyphs) {
+    var pbf = new Pbf();
+    messages.glyphs.write(glyphs, pbf);
+    return pbf.finish();
+}
 
 function debug(buffer, decode) {
-    if (decode) buffer = messages.glyphs.decode(buffer);
+    if (decode) buffer = decodeGlyphs(buffer);
 
     return JSON.stringify(buffer, function(k, v) {
         if (k !== 'bitmap') return v;
-        return v ? v.data.length : v;
+        return v ? Object.keys(v).length : v;
     }, 2);
 }
 
@@ -29,7 +42,7 @@ function combine(buffers, fontstack) {
 
     for (var i = 0, j; i < buffers.length; i++) {
         var buf = buffers[i];
-        var decoded = messages.glyphs.decode(buf);
+        var decoded = decodeGlyphs(buf);
         var glyphs = decoded.stacks[0].glyphs;
         if (!result) {
             for (j = 0; j < glyphs.length; j++) {
@@ -51,7 +64,7 @@ function combine(buffers, fontstack) {
 
     result.stacks[0].glyphs.sort(compareId);
 
-    return messages.glyphs.encode(result);
+    return encodeGlyphs(result);
 }
 
 function compareId(a, b) {
@@ -61,6 +74,6 @@ function compareId(a, b) {
 module.exports = {
     combine: combine,
     debug: debug,
-    encode: messages.glyphs.encode,
-    decode: messages.glyphs.decode
+    encode: encodeGlyphs,
+    decode: decodeGlyphs
 };
