@@ -27,12 +27,12 @@ function combine(buffers, fontstack) {
 
     if (!buffers || buffers.length === 0) return;
 
-    for (var i = 0; i < buffers.length; i++) {
+    for (var i = 0, j; i < buffers.length; i++) {
         var buf = buffers[i];
         var decoded = messages.glyphs.decode(buf);
         var glyphs = decoded.stacks[0].glyphs;
         if (!result) {
-            for (var j = 0; j < glyphs.length; j++) {
+            for (j = 0; j < glyphs.length; j++) {
                 coverage[glyphs[j].id] = true;
             }
             result = decoded;
