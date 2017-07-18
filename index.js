@@ -24,32 +24,38 @@ function debug(buffer, decode) {
 function combine(buffers, fontstack) {
     var result,
         coverage = {};
-    
+
     if (!buffers || buffers.length === 0) return;
 
-    buffers.forEach(function(buf) {
+    for (var i = 0, j; i < buffers.length; i++) {
+        var buf = buffers[i];
         var decoded = messages.glyphs.decode(buf);
         var glyphs = decoded.stacks[0].glyphs;
         if (!result) {
-            glyphs.forEach(function(glyph) {
-                coverage[glyph.id] = true;
-            });
+            for (j = 0; j < glyphs.length; j++) {
+                coverage[glyphs[j].id] = true;
+            }
             result = decoded;
         } else {
-            glyphs.forEach(function(glyph) {
+            for (j = 0; j < glyphs.length; j++) {
+                var glyph = glyphs[j];
                 if (!coverage[glyph.id]) {
                     result.stacks[0].glyphs.push(glyph);
                     coverage[glyph.id] = true;
                 }
-            });
+            }
             result.stacks[0].name += ', ' + decoded.stacks[0].name;
         }
-    });
+    }
     if (fontstack) result.stacks[0].name = fontstack;
 
-    result.stacks[0].glyphs.sort(function(a, b) { return a.id - b.id; });
+    result.stacks[0].glyphs.sort(compareId);
 
     return messages.glyphs.encode(result);
+}
+
+function compareId(a, b) {
+    return a.id - b.id;
 }
 
 module.exports = {
