@@ -4,7 +4,7 @@ var protobuf = require('protocol-buffers');
 var fs = require('fs');
 var path = require('path');
 
-var messages = protobuf(fs.readFileSync(path.join(__dirname + '/proto/glyphs.proto')));
+var messages = protobuf(fs.readFileSync(path.join(__dirname, './proto/glyphs.proto')));
 
 function debug(buffer, decode) {
     if (decode) buffer = messages.glyphs.decode(buffer);
