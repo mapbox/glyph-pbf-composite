@@ -8,7 +8,10 @@ var openSans512 = fs.readFileSync(__dirname + '/fixtures/opensans.512.767.pbf'),
     arialUnicode512 = fs.readFileSync(__dirname + '/fixtures/arialunicode.512.767.pbf'),
     league512 = fs.readFileSync(__dirname + '/fixtures/league.512.767.pbf'),
     composite512 = fs.readFileSync(__dirname + '/fixtures/opensans.arialunicode.512.767.pbf'),
-    triple512 = fs.readFileSync(__dirname + '/fixtures/league.opensans.arialunicode.512.767.pbf');
+    triple512 = fs.readFileSync(__dirname + '/fixtures/league.opensans.arialunicode.512.767.pbf'),
+    lato512 = fs.readFileSync(__dirname + '/fixtures/lato.512.767.pbf'),
+    latoLight512 = fs.readFileSync(__dirname + '/fixtures/latolight.512.767.pbf'),
+    cascadiacode512 = fs.readFileSync(__dirname + '/fixtures/cascadiacode.512.767.pbf');
 
 tape('compositing two pbfs', function(t) {
     var composite = glyphs.decode(glyphs.combine([openSans512, arialUnicode512]));
@@ -87,5 +90,69 @@ tape('can composite more than two', function(t) {
     var expected = glyphs.decode(triple512);
 
     t.deepEqual(composite, expected, 'can composite three');
+    t.end();
+});
+
+tape('ascender is set when available', function(t) {
+    var cascadia = glyphs.decode(cascadiacode512);
+    var lato = glyphs.decode(lato512);
+    var latoLight = glyphs.decode(latoLight512);
+
+    t.equal(cascadia.stacks[0].ascender, 23, 'ascender is set');
+    t.equal(lato.stacks[0].ascender, 24, 'ascender is set');
+    t.equal(latoLight.stacks[0].ascender, 24, 'ascender is set');
+    t.end();
+});
+
+tape('descender is set when available', function(t) {
+    var cascadia = glyphs.decode(cascadiacode512);
+    var lato = glyphs.decode(lato512);
+    var latoLight = glyphs.decode(latoLight512);
+
+    t.equal(cascadia.stacks[0].descender, -6, 'descender is set');
+    t.equal(lato.stacks[0].descender, -5, 'descender is set');
+    t.equal(latoLight.stacks[0].descender, -5, 'descender is set');
+    t.end();
+});
+
+tape('ascender is 0 when not set', function(t) {
+    var decoded = glyphs.decode(openSans512);
+
+    t.equal(decoded.stacks[0].ascender, 0, 'ascender is zero');
+    t.end();
+});
+
+tape('descender is 0 when not set', function(t) {
+    var decoded = glyphs.decode(openSans512);
+
+    t.equal(decoded.stacks[0].descender, 0, 'ascender is zero');
+    t.end();
+});
+
+tape('ascender is set to value if all fonts have the same value', function(t) {
+    var composite = glyphs.decode(glyphs.combine([lato512, latoLight512]));
+
+    t.equal(composite.stacks[0].ascender, 24, 'ascender is set');
+    t.end();
+});
+
+tape('descender is set to value if all fonts have the same value', function(t) {
+    var composite = glyphs.decode(glyphs.combine([lato512, latoLight512]));
+
+    t.equal(composite.stacks[0].descender, -5, 'descender is set');
+    t.end();
+});
+
+tape('ascender is set to 0 if fonts have different values', function(t) {
+    var composite = glyphs.decode(glyphs.combine([cascadiacode512, lato512]));
+
+    t.equal(composite.stacks[0].ascender, 0, 'ascender is zero');
+    t.end();
+});
+
+tape('descender is set to 0 if fonts have different values', function(t) {
+    var composite = glyphs.decode(glyphs.combine([cascadiacode512, lato512]));
+
+    t.equal(composite.stacks[0].descender, 0, 'descender is zero');
     t.end();
 });
