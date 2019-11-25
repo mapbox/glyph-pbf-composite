@@ -125,7 +125,7 @@ tape('ascender is 0 when not set', function(t) {
 tape('descender is 0 when not set', function(t) {
     var decoded = glyphs.decode(openSans512);
 
-    t.equal(decoded.stacks[0].descender, 0, 'ascender is zero');
+    t.equal(decoded.stacks[0].descender, 0, 'descender is zero');
     t.end();
 });
 
