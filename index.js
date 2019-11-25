@@ -46,6 +46,13 @@ function combine(buffers, fontstack) {
                 }
             }
             result.stacks[0].name += ', ' + decoded.stacks[0].name;
+
+            if (result.stacks[0].ascender !== decoded.stacks[0].ascender) {
+                result.stacks[0].ascender = 0;
+            }
+            if (result.stacks[0].descender !== decoded.stacks[0].descender) {
+                result.stacks[0].descender = 0;
+            }
         }
     }
     if (fontstack) result.stacks[0].name = fontstack;
