@@ -2,6 +2,11 @@
   "name": "@mapbox/glyph-pbf-composite",
   "version": "0.0.3",
   "description": "Combine glyph (SDF) PBFs on the fly.",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mapbox/glyph-pbf-composite.git"
+  },
   "main": "index.js",
   "dependencies": {
     "protocol-buffers": "^2.4.7"
