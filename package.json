@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/glyph-pbf-composite",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Combine glyph (SDF) PBFs on the fly.",
   "main": "index.js",
   "dependencies": {
@@ -26,5 +26,8 @@
     "unused": true,
     "strict": true,
     "node": true
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
